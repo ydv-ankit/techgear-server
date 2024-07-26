@@ -1,37 +1,53 @@
 import prisma from "../src/lib/prisma/db";
+import { hashPassword } from "../src/utils/bcrypt";
 
 async function main() {
-  const product = await prisma.product.create({
-    data: {
-      name: "Product A",
-      price: 100,
-      rating: 4.5,
-      discount: 10,
-      no_of_sales: 50,
-    },
-  });
+  await prisma.rating.deleteMany({});
+  await prisma.product.deleteMany({});
+  await prisma.product.deleteMany({});
+  await prisma.user.deleteMany({});
 
-  const user = await prisma.user.create({
+  const hashedPassword = await hashPassword("ankit123");
+
+  await prisma.user.create({
     data: {
-      name: "Alice",
-      email: "alice@mail.com",
-      avatar: "https://avatar.iran.liara.run/public/alice",
+      name: "Ankit",
+      email: "ankit@mail.com",
+      password: hashedPassword,
+      avatar: `https://avatar.iran.liara.run/username?username=Ankit`,
       addresses: {
-        create: {
-          address: "123 Main St, Wonderland",
-        },
+        create: [
+          {
+            address: "123 Main St, Springfield",
+          },
+        ],
       },
       ratings: {
-        create: {
-          score: 5,
-          productId: product.id,
+        create: [
+          {
+            score: 4,
+            product: {
+              create: {
+                name: "Laptop",
+                price: 1000,
+                rating: 4,
+                discount: 100,
+                no_of_sales: 150,
+              },
+            },
+          },
+        ],
+      },
+    },
+    include: {
+      addresses: true,
+      ratings: {
+        include: {
+          product: true,
         },
       },
     },
   });
-
-  console.log("User created:", user);
-  console.log("Product created:", product);
 }
 
 main()
