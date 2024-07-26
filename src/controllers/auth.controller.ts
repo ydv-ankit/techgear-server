@@ -23,7 +23,7 @@ const register = async (req: Request, res: Response) => {
       where: { email },
     });
     if (userExists) {
-      return res.status(CONSTANTS.RESPONSE_CODE.BAD_REQUEST).json(new ApiResponse(CONSTANTS.MESSAGES.USER_ALREADY_EXISTS, null));
+      return res.status(400).json(new ApiResponse(CONSTANTS.MESSAGES.USER_ALREADY_EXISTS, null));
     }
     const user = await prisma.user.create({
       data: {
@@ -33,9 +33,9 @@ const register = async (req: Request, res: Response) => {
         avatar: `https://avatar.iran.liara.run/username?username=${name}`,
       },
     });
-    res.status(CONSTANTS.RESPONSE_CODE.CREATED).json(new ApiResponse(CONSTANTS.MESSAGES.USER_CREATED, null));
+    res.status(201).json(new ApiResponse(CONSTANTS.MESSAGES.USER_CREATED, null));
   } catch (error) {
-    res.status(CONSTANTS.RESPONSE_CODE.INTERNAL_SERVER_ERROR).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, null));
+    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, null));
   }
 };
 
@@ -46,7 +46,7 @@ const login = async (req: Request, res: Response) => {
       where: { email },
     });
     if (!user) {
-      return res.status(CONSTANTS.RESPONSE_CODE.BAD_REQUEST).json(new ApiResponse(CONSTANTS.MESSAGES.USER_NOT_FOUND, null));
+      return res.status(400).json(new ApiResponse(CONSTANTS.MESSAGES.USER_NOT_FOUND, null));
     }
     const isCorrectPassword = await bcrypt.compare(password, user.password);
     if (isCorrectPassword) {
@@ -54,7 +54,7 @@ const login = async (req: Request, res: Response) => {
       res
         .cookie("refreshToken", refreshToken, cookieOptions)
         .cookie("accessToken", accessToken, cookieOptions)
-        .status(CONSTANTS.RESPONSE_CODE.SUCCESS)
+        .status(200)
         .json(
           new ApiResponse(CONSTANTS.MESSAGES.USER_LOGGED_IN, {
             user: {
@@ -66,10 +66,10 @@ const login = async (req: Request, res: Response) => {
           })
         );
     } else {
-      res.status(CONSTANTS.RESPONSE_CODE.BAD_REQUEST).json(new ApiResponse(CONSTANTS.MESSAGES.INVALID_CREDENTIALS, null));
+      res.status(400).json(new ApiResponse(CONSTANTS.MESSAGES.INVALID_CREDENTIALS, null));
     }
   } catch (error) {
-    res.status(CONSTANTS.RESPONSE_CODE.INTERNAL_SERVER_ERROR).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, null));
+    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, null));
   }
 };
 
@@ -82,12 +82,14 @@ const generateNewToken = async (req: Request, res: Response) => {
   try {
     const refreshTokenPayload = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET!);
     const { userid } = refreshTokenPayload as jwt.JwtPayload;
-    console.log(userid);
-
-    const { accessToken } = generateRefreshAndAccessToken(userid);
-    res.cookie("accessToken", accessToken, cookieOptions).status(CONSTANTS.RESPONSE_CODE.SUCCESS).json(new ApiResponse(null, null));
+    const { accessToken, refreshToken: newRefreshToken } = generateRefreshAndAccessToken(userid);
+    await prisma.user.update({
+      where: { id: userid },
+      data: { refreshToken: newRefreshToken, accessToken: accessToken },
+    });
+    res.cookie("accessToken", accessToken, cookieOptions).cookie("refreshToken", newRefreshToken, cookieOptions).status(200).json(new ApiResponse(null, null));
   } catch (error) {
-    res.status(CONSTANTS.RESPONSE_CODE.UNAUTHORIZED).json(new ApiResponse(CONSTANTS.MESSAGES.USER_LOGIN_REQUIRED, null));
+    res.status(401).json(new ApiResponse(CONSTANTS.MESSAGES.USER_LOGIN_REQUIRED, null));
   }
 };
 
