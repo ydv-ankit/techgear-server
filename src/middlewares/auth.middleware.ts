@@ -16,7 +16,7 @@ const authMiddleware = async (req: UserRequest, res: Response, next: NextFunctio
     req.user.userid = (accessTokenPayload as JwtPayload)?.userid;
     next();
   } catch (error) {
-    res.status(CONSTANTS.RESPONSE_CODE.UNAUTHORIZED).json(new ApiResponse(CONSTANTS.MESSAGES.USER_LOGIN_REQUIRED, null));
+    res.status(401).json(new ApiResponse(CONSTANTS.MESSAGES.USER_LOGIN_REQUIRED, null));
   }
 };
 
