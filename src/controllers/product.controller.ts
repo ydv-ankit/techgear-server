@@ -31,4 +31,80 @@ const create = async (req: Request, res: Response) => {
   }
 };
 
-export { create };
+const productDetails = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const product = await prisma.product.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    if (!product) {
+      return res.status(404).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_NOT_FOUND, null));
+    }
+    res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_FOUND, product));
+  } catch (error) {
+    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, null));
+  }
+};
+
+const getAllProducts = async (req: Request, res: Response) => {
+  try {
+    const products = await prisma.product.findMany();
+    res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_FOUND, products));
+  } catch (error) {
+    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, null));
+  }
+};
+
+const updateProduct = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { name, price, discount } = req.body;
+  try {
+    const product = await prisma.product.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    if (!product) {
+      return res.status(404).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_NOT_FOUND, null));
+    }
+    await prisma.product.update({
+      where: {
+        id: id,
+      },
+      data: {
+        name,
+        price: parseInt(price),
+        discount: parseInt(discount),
+      },
+    });
+    res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_UPDATED, null));
+  } catch (error) {
+    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, null));
+  }
+};
+
+const deleteProduct = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const product = await prisma.product.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    if (!product) {
+      return res.status(404).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_NOT_FOUND, null));
+    }
+    await prisma.product.delete({
+      where: {
+        id: id,
+      },
+    });
+    res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_DELETED, null));
+  } catch (error) {
+    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, null));
+  }
+};
+
+export { create, productDetails, getAllProducts, updateProduct, deleteProduct };

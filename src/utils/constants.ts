@@ -11,6 +11,7 @@ export const CONSTANTS = {
     USER_LOGIN_REQUIRED: "User login required",
     FILE_NOT_FOUND: "File not found",
     PRODUCT_CREATED: "Product created",
+    PRODUCT_FOUND: "Product found",
     PRODUCT_UPDATED: "Product updated",
     PRODUCT_DELETED: "Product deleted",
     PRODUCT_NOT_FOUND: "Product not found",
