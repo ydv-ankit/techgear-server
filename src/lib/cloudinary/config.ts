@@ -1,8 +1,7 @@
-import path from "path";
-
 const { v2: cloudinary } = require("cloudinary");
+import fs from "fs";
 
-export const uploadImage = async (imagePath: path.FormatInputPathObject) => {
+export const uploadImage = async (imagePath: string) => {
   console.log("imagePath", imagePath);
 
   cloudinary.config({
@@ -15,6 +14,7 @@ export const uploadImage = async (imagePath: path.FormatInputPathObject) => {
     const result = await cloudinary.uploader.upload(imagePath, {
       asset_folder: "techgear",
     });
+    fs.unlinkSync(imagePath);
     return { data: result };
   } catch (error) {
     return { error };

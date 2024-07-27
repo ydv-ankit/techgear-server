@@ -1,12 +1,4 @@
 export const CONSTANTS = {
-  RESPONSE_CODE: {
-    SUCCESS: 200,
-    CREATED: 201,
-    BAD_REQUEST: 400,
-    UNAUTHORIZED: 401,
-    NOT_FOUND: 404,
-    INTERNAL_SERVER_ERROR: 500,
-  },
   MESSAGES: {
     USER_ALREADY_EXISTS: "User already exists",
     INVALID_CREDENTIALS: "Invalid credentials",
@@ -17,5 +9,11 @@ export const CONSTANTS = {
     INTERNAL_SERVER_ERROR: "Internal server error",
     ROUTE_NOT_FOUND: "Route not found",
     USER_LOGIN_REQUIRED: "User login required",
+    FILE_NOT_FOUND: "File not found",
+    PRODUCT_CREATED: "Product created",
+    PRODUCT_UPDATED: "Product updated",
+    PRODUCT_DELETED: "Product deleted",
+    PRODUCT_NOT_FOUND: "Product not found",
+    MISSING_FIELDS: "Missing fields",
   },
 };
