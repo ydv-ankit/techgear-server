@@ -24,7 +24,7 @@ model Product {
   name        String
   price       Int
   image       String
-  rating      Float
+  rating      Int?
   discount    Int
   no_of_sales Int
   Rating      Rating[]
