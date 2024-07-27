@@ -32,11 +32,12 @@ app.use(
     },
   })
 );
+
 app.use(express.json());
 app.use(cookieParser());
 
 // constants
-const PORT: String | Number = process.env.PORT || 8888;
+const PORT: String | Number = process.env.PORT || 8080;
 
 // routes
 app.get("/health", (req: Request, res: Response) => {
