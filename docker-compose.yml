@@ -3,6 +3,9 @@ version: "3.8"
 services:
   techgear-db:
     image: postgres:latest
+    restart: always
+    env_file:
+      - .env
     environment:
       POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
@@ -13,7 +16,8 @@ services:
       - techgear_pg_storage:/var/lib/postgresql/data
 
   techgear-server:
-    image: serv
+    image: ydvankit/techgear-server:latest
+    restart: always
     build: .
     ports:
       - "${PORT:-8080}:8080"
