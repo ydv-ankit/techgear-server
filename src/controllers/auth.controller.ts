@@ -89,7 +89,7 @@ const generateNewToken = async (req: Request, res: Response) => {
     });
     res.cookie("accessToken", accessToken, cookieOptions).cookie("refreshToken", newRefreshToken, cookieOptions).status(200).json(new ApiResponse(CONSTANTS.MESSAGES.USER_LOGGED_IN, null));
   } catch (error) {
-    res.status(401).json(new ApiResponse(CONSTANTS.MESSAGES.USER_LOGIN_REQUIRED, null));
+    res.clearCookie("accessToken", cookieOptions).clearCookie("refreshToken", cookieOptions).status(401).json(new ApiResponse(CONSTANTS.MESSAGES.USER_LOGIN_REQUIRED, null));
   }
 };
 
