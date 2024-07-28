@@ -30,7 +30,7 @@ async function main() {
               create: {
                 name: "Laptop",
                 image: `https://res.cloudinary.com/db4xfdj2m/image/upload/f_auto,q_auto/v1/techgear/udhc4xzxrrwyo3mqsrol`,
-                price: 1000,
+                price: 263.32,
                 rating: 4,
                 discount: 100,
                 no_of_sales: 150,

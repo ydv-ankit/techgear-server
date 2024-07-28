@@ -10,7 +10,7 @@ const addAddress = async (req: UserRequest, res: Response) => {
     const addressResponse = await prisma.address.create({
       data: {
         address,
-        userId: req.user!.id,
+        user_id: req.user!.id,
       },
     });
     res.status(201).json(new ApiResponse(CONSTANTS.MESSAGES.ADDRESS_ADDED, addressResponse));
@@ -23,7 +23,7 @@ const getUserAddresses = async (req: UserRequest, res: Response) => {
   try {
     const addressResponse = await prisma.address.findMany({
       where: {
-        userId: req.user!.id,
+        user_id: req.user!.id,
       },
     });
     res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.ADDRESS_FOUND, addressResponse));

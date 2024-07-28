@@ -13,7 +13,7 @@ const addRating = async (req: UserRequest, res: Response, next: NextFunction) =>
       return res.status(400).json(new ApiResponse(CONSTANTS.MESSAGES.MISSING_FIELDS, null));
     }
 
-    const [product, existingRating] = await Promise.all([prisma.product.findUnique({ where: { id: product_id } }), prisma.rating.findFirst({ where: { productId: product_id, userId: user_id } })]);
+    const [product, existingRating] = await Promise.all([prisma.product.findUnique({ where: { id: product_id } }), prisma.rating.findFirst({ where: { product_id: product_id, user_id } })]);
 
     if (!product) {
       return res.status(404).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_NOT_FOUND, null));
@@ -25,7 +25,7 @@ const addRating = async (req: UserRequest, res: Response, next: NextFunction) =>
 
     const score = parseInt(rating_score, 10);
     const rating = await prisma.rating.create({
-      data: { score, productId: product_id, userId: user_id },
+      data: { score, product_id: product_id, user_id: user_id },
     });
 
     const updatedProductRating = product.rating ? product.rating + score / 2 : score;
