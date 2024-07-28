@@ -41,4 +41,13 @@ const addRating = async (req: UserRequest, res: Response, next: NextFunction) =>
   }
 };
 
-export { addRating };
+const getAllRatings = async (req: Request, res: Response) => {
+  try {
+    const ratings = await prisma.rating.findMany();
+    res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.RATING_FOUND, ratings));
+  } catch (error) {
+    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, null));
+  }
+};
+
+export { addRating, getAllRatings };

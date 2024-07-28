@@ -8,6 +8,9 @@ import authRoutes from "./routes/auth.route";
 import productRoutes from "./routes/product.route";
 import cookieParser from "cookie-parser";
 import ratingRoutes from "./routes/rating.route";
+import addressRoutes from "./routes/address.route";
+import authMiddleware from "./middlewares/auth.middleware";
+
 const app = express();
 
 // middlewares
@@ -44,8 +47,9 @@ app.get("/health", (req: Request, res: Response) => {
   res.status(200).json(new ApiResponse("Server is running smoothly", null));
 });
 app.use("/api/v1/auth", authRoutes);
-app.use("/api/v1/product", productRoutes);
-app.use("/api/v1/rating", ratingRoutes);
+app.use("/api/v1/product", authMiddleware, productRoutes);
+app.use("/api/v1/rating", authMiddleware, ratingRoutes);
+app.use("/api/v1/address", authMiddleware, addressRoutes);
 app.use("*", (req: Request, res: Response) => {
   res.status(404).json(new ApiResponse(CONSTANTS.MESSAGES.ROUTE_NOT_FOUND, null));
 });

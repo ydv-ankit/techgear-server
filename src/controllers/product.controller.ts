@@ -4,7 +4,7 @@ import ApiResponse from "../utils/ApiResponse";
 import { CONSTANTS } from "../utils/constants";
 import prisma from "../lib/prisma/db";
 
-const create = async (req: Request, res: Response) => {
+const createProduct = async (req: Request, res: Response) => {
   const filepath = req.file?.path;
   const { name, price, discount } = req.body;
 
@@ -31,7 +31,7 @@ const create = async (req: Request, res: Response) => {
   }
 };
 
-const productDetails = async (req: Request, res: Response) => {
+const productDetailsById = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
     const product = await prisma.product.findUnique({
@@ -57,7 +57,7 @@ const getAllProducts = async (req: Request, res: Response) => {
   }
 };
 
-const updateProduct = async (req: Request, res: Response) => {
+const updateProductById = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { name, price, discount } = req.body;
   try {
@@ -85,7 +85,7 @@ const updateProduct = async (req: Request, res: Response) => {
   }
 };
 
-const deleteProduct = async (req: Request, res: Response) => {
+const deleteProductById = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
     const product = await prisma.product.findUnique({
@@ -107,4 +107,4 @@ const deleteProduct = async (req: Request, res: Response) => {
   }
 };
 
-export { create, productDetails, getAllProducts, updateProduct, deleteProduct };
+export { createProduct, productDetailsById, getAllProducts, updateProductById, deleteProductById };
