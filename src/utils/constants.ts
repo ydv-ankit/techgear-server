@@ -15,6 +15,8 @@ export const CONSTANTS = {
     PRODUCT_UPDATED: "Product updated",
     PRODUCT_DELETED: "Product deleted",
     PRODUCT_NOT_FOUND: "Product not found",
+    RATING_ADDED: "Rating added",
+    RATING_ALREADY_EXISTS: "Rating already exists",
     MISSING_FIELDS: "Missing fields",
   },
 };

@@ -7,7 +7,7 @@ import { CONSTANTS } from "./utils/constants";
 import authRoutes from "./routes/auth.route";
 import productRoutes from "./routes/product.route";
 import cookieParser from "cookie-parser";
-
+import ratingRoutes from "./routes/rating.route";
 const app = express();
 
 // middlewares
@@ -45,6 +45,7 @@ app.get("/health", (req: Request, res: Response) => {
 });
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/product", productRoutes);
+app.use("/api/v1/rating", ratingRoutes);
 app.use("*", (req: Request, res: Response) => {
   res.status(404).json(new ApiResponse(CONSTANTS.MESSAGES.ROUTE_NOT_FOUND, null));
 });
