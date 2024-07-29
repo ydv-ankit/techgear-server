@@ -1,7 +1,7 @@
 class ApiResponse {
   message: string | null;
-  data: object | null;
-  constructor(message: string | null, data: object | null) {
+  data: object | undefined;
+  constructor(message: string | null, data?: object) {
     this.message = message;
     this.data = data;
   }

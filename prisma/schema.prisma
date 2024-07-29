@@ -65,7 +65,7 @@ model ItemCart {
 
 model Order {
   id             String         @id @default(uuid())
-  products       String?
+  products       String[]
   payment_status PAYMENT_STATUS @default(PENDING)
   payment_price  Int
   user_id        String
