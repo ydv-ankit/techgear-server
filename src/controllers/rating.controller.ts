@@ -10,17 +10,17 @@ const addRating = async (req: UserRequest, res: Response, next: NextFunction) =>
     const user_id = req.user?.id;
 
     if (!user_id || !rating_score || !product_id) {
-      return res.status(400).json(new ApiResponse(CONSTANTS.MESSAGES.MISSING_FIELDS, null));
+      return res.status(400).json(new ApiResponse(CONSTANTS.MESSAGES.MISSING_FIELDS));
     }
 
     const [product, existingRating] = await Promise.all([prisma.product.findUnique({ where: { id: product_id } }), prisma.rating.findFirst({ where: { product_id: product_id, user_id } })]);
 
     if (!product) {
-      return res.status(404).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_NOT_FOUND, null));
+      return res.status(404).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_NOT_FOUND));
     }
 
     if (existingRating) {
-      return res.status(400).json(new ApiResponse(CONSTANTS.MESSAGES.RATING_ALREADY_EXISTS, null));
+      return res.status(400).json(new ApiResponse(CONSTANTS.MESSAGES.RATING_ALREADY_EXISTS));
     }
 
     const score = parseInt(rating_score, 10);
@@ -37,7 +37,7 @@ const addRating = async (req: UserRequest, res: Response, next: NextFunction) =>
 
     res.status(201).json(new ApiResponse(CONSTANTS.MESSAGES.RATING_ADDED, rating));
   } catch (error) {
-    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, null));
+    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
   }
 };
 
@@ -46,7 +46,7 @@ const getAllRatings = async (req: Request, res: Response) => {
     const ratings = await prisma.rating.findMany();
     res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.RATING_FOUND, ratings));
   } catch (error) {
-    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, null));
+    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
   }
 };
 

@@ -44,14 +44,14 @@ const PORT: String | Number = process.env.PORT || 8080;
 
 // routes
 app.get("/health", (req: Request, res: Response) => {
-  res.status(200).json(new ApiResponse("Server is running smoothly", null));
+  res.status(200).json(new ApiResponse("Server is running smoothly"));
 });
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/product", authMiddleware, productRoutes);
 app.use("/api/v1/rating", authMiddleware, ratingRoutes);
 app.use("/api/v1/address", authMiddleware, addressRoutes);
 app.use("*", (req: Request, res: Response) => {
-  res.status(404).json(new ApiResponse(CONSTANTS.MESSAGES.ROUTE_NOT_FOUND, null));
+  res.status(404).json(new ApiResponse(CONSTANTS.MESSAGES.ROUTE_NOT_FOUND));
 });
 
 // start listening

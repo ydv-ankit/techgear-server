@@ -22,6 +22,26 @@ const placeNewOrder = async (req: UserRequest, res: Response) => {
 
     // TODO: generate payment link
 
+    // const paymentLink = await fetch(`${process.env.PAYPAL_BASE_URL}/v2/checkout/orders`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: `Bearer ${accessToken}`,
+    //   },
+    //   body: JSON.stringify({
+    //     intent: "CAPTURE",
+    //     purchase_units: [
+    //       {
+    //         amount: {
+    //           currency_code: "USD",
+    //           value: total_price,
+    //         },
+    //       },
+    //     ],
+    //   }),
+    // });
+    // console.log(paymentLink);
+
     // send response
     res.status(201).json(new ApiResponse(CONSTANTS.MESSAGES.ORDER_PLACED, order));
   } catch (error) {

@@ -15,7 +15,7 @@ const addAddress = async (req: UserRequest, res: Response) => {
     });
     res.status(201).json(new ApiResponse(CONSTANTS.MESSAGES.ADDRESS_ADDED, addressResponse));
   } catch (error) {
-    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, null));
+    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
   }
 };
 
@@ -28,7 +28,7 @@ const getUserAddresses = async (req: UserRequest, res: Response) => {
     });
     res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.ADDRESS_FOUND, addressResponse));
   } catch (error) {
-    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, null));
+    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
   }
 };
 
@@ -40,9 +40,9 @@ const getAddressById = async (req: UserRequest, res: Response) => {
         id,
       },
     });
-    res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.ADDRESS_FOUND, addressResponse));
+    res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.ADDRESS_FOUND, addressResponse!));
   } catch (error) {
-    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, null));
+    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
   }
 };
 
@@ -51,7 +51,7 @@ const getAllAddresses = async (req: UserRequest, res: Response) => {
     const addressResponse = await prisma.address.findMany();
     res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.ADDRESS_FOUND, addressResponse));
   } catch (error) {
-    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, null));
+    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
   }
 };
 
@@ -67,9 +67,9 @@ const updateAddressById = async (req: UserRequest, res: Response) => {
         address,
       },
     });
-    res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.ADDRESS_UPDATED, null));
+    res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.ADDRESS_UPDATED));
   } catch (error) {
-    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, null));
+    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
   }
 };
 
@@ -81,9 +81,9 @@ const deleteAddressById = async (req: UserRequest, res: Response) => {
         id,
       },
     });
-    res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.ADDRESS_DELETED, null));
+    res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.ADDRESS_DELETED));
   } catch (error) {
-    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, null));
+    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
   }
 };
 

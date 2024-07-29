@@ -9,10 +9,10 @@ const createProduct = async (req: Request, res: Response) => {
   const { name, price, discount } = req.body;
 
   if (!name || !price || !discount) {
-    return res.status(400).json(new ApiResponse(CONSTANTS.MESSAGES.MISSING_FIELDS, null));
+    return res.status(400).json(new ApiResponse(CONSTANTS.MESSAGES.MISSING_FIELDS));
   }
   if (!filepath) {
-    return res.status(400).json(new ApiResponse(CONSTANTS.MESSAGES.FILE_NOT_FOUND, null));
+    return res.status(400).json(new ApiResponse(CONSTANTS.MESSAGES.FILE_NOT_FOUND));
   }
   try {
     const uploadedImage = await uploadImage(filepath);
@@ -25,9 +25,9 @@ const createProduct = async (req: Request, res: Response) => {
         no_of_sales: 0,
       },
     });
-    res.status(201).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_CREATED, null));
+    res.status(201).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_CREATED));
   } catch (error) {
-    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, null));
+    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
   }
 };
 
@@ -40,11 +40,11 @@ const productDetailsById = async (req: Request, res: Response) => {
       },
     });
     if (!product) {
-      return res.status(404).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_NOT_FOUND, null));
+      return res.status(404).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_NOT_FOUND));
     }
     res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_FOUND, product));
   } catch (error) {
-    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, null));
+    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
   }
 };
 
@@ -53,7 +53,7 @@ const getAllProducts = async (req: Request, res: Response) => {
     const products = await prisma.product.findMany();
     res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_FOUND, products));
   } catch (error) {
-    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, null));
+    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
   }
 };
 
@@ -67,7 +67,7 @@ const updateProductById = async (req: Request, res: Response) => {
       },
     });
     if (!product) {
-      return res.status(404).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_NOT_FOUND, null));
+      return res.status(404).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_NOT_FOUND));
     }
     await prisma.product.update({
       where: {
@@ -79,9 +79,9 @@ const updateProductById = async (req: Request, res: Response) => {
         discount: parseInt(discount),
       },
     });
-    res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_UPDATED, null));
+    res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_UPDATED));
   } catch (error) {
-    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, null));
+    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
   }
 };
 
@@ -94,16 +94,16 @@ const deleteProductById = async (req: Request, res: Response) => {
       },
     });
     if (!product) {
-      return res.status(404).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_NOT_FOUND, null));
+      return res.status(404).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_NOT_FOUND));
     }
     await prisma.product.delete({
       where: {
         id: id,
       },
     });
-    res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_DELETED, null));
+    res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_DELETED));
   } catch (error) {
-    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, null));
+    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
   }
 };
 

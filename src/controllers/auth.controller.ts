@@ -23,7 +23,7 @@ const register = async (req: Request, res: Response) => {
       where: { email },
     });
     if (userExists) {
-      return res.status(400).json(new ApiResponse(CONSTANTS.MESSAGES.USER_ALREADY_EXISTS, null));
+      return res.status(400).json(new ApiResponse(CONSTANTS.MESSAGES.USER_ALREADY_EXISTS));
     }
     const user = await prisma.user.create({
       data: {
@@ -33,9 +33,9 @@ const register = async (req: Request, res: Response) => {
         avatar: `https://avatar.iran.liara.run/username?username=${name}`,
       },
     });
-    res.status(201).json(new ApiResponse(CONSTANTS.MESSAGES.USER_CREATED, null));
+    res.status(201).json(new ApiResponse(CONSTANTS.MESSAGES.USER_CREATED));
   } catch (error) {
-    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, null));
+    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
   }
 };
 
@@ -46,7 +46,7 @@ const login = async (req: Request, res: Response) => {
       where: { email },
     });
     if (!user) {
-      return res.status(400).json(new ApiResponse(CONSTANTS.MESSAGES.USER_NOT_FOUND, null));
+      return res.status(400).json(new ApiResponse(CONSTANTS.MESSAGES.USER_NOT_FOUND));
     }
     const isCorrectPassword = await bcrypt.compare(password, user.password);
     if (isCorrectPassword) {
@@ -66,15 +66,15 @@ const login = async (req: Request, res: Response) => {
           })
         );
     } else {
-      res.status(400).json(new ApiResponse(CONSTANTS.MESSAGES.INVALID_CREDENTIALS, null));
+      res.status(400).json(new ApiResponse(CONSTANTS.MESSAGES.INVALID_CREDENTIALS));
     }
   } catch (error) {
-    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, null));
+    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
   }
 };
 
 const logout = async (req: Request, res: Response) => {
-  res.clearCookie("refreshToken", cookieOptions).clearCookie("accessToken", cookieOptions).json(new ApiResponse(CONSTANTS.MESSAGES.USER_LOGGED_OUT, null));
+  res.clearCookie("refreshToken", cookieOptions).clearCookie("accessToken", cookieOptions).json(new ApiResponse(CONSTANTS.MESSAGES.USER_LOGGED_OUT));
 };
 
 const generateNewToken = async (req: Request, res: Response) => {
@@ -87,9 +87,9 @@ const generateNewToken = async (req: Request, res: Response) => {
       where: { id: userid },
       data: { refreshToken: newRefreshToken, accessToken: accessToken },
     });
-    res.cookie("accessToken", accessToken, cookieOptions).cookie("refreshToken", newRefreshToken, cookieOptions).status(200).json(new ApiResponse(CONSTANTS.MESSAGES.USER_LOGGED_IN, null));
+    res.cookie("accessToken", accessToken, cookieOptions).cookie("refreshToken", newRefreshToken, cookieOptions).status(200).json(new ApiResponse(CONSTANTS.MESSAGES.USER_LOGGED_IN));
   } catch (error) {
-    res.clearCookie("accessToken", cookieOptions).clearCookie("refreshToken", cookieOptions).status(401).json(new ApiResponse(CONSTANTS.MESSAGES.USER_LOGIN_REQUIRED, null));
+    res.clearCookie("accessToken", cookieOptions).clearCookie("refreshToken", cookieOptions).status(401).json(new ApiResponse(CONSTANTS.MESSAGES.USER_LOGIN_REQUIRED));
   }
 };
 

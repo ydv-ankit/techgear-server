@@ -36,6 +36,7 @@
     "@types/morgan": "^1.9.9",
     "@types/multer": "^1.4.11",
     "@types/node": "^20.14.12",
+    "@types/node-fetch": "^2.6.11",
     "prisma": "^5.16.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.3"
