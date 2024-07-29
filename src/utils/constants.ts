@@ -23,6 +23,7 @@ export const CONSTANTS = {
     ADDRESS_UPDATED: "Address updated",
     ADDRESS_FOUND: "Address found",
     ORDER_PLACED: "Order placed",
+    ORDER_FOUND: "Order found",
     ORDER_DELETED: "Order deleted",
     ORDER_NOT_FOUND: "Order not found",
     MISSING_FIELDS: "Missing fields",

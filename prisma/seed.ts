@@ -18,7 +18,12 @@ async function main() {
       addresses: {
         create: [
           {
-            address: "123 Main St, Springfield",
+            address_line_1: "123 Townsend St",
+            address_line_2: "Floor 6",
+            street_name: "CP",
+            city: "Delhi",
+            postal_code: "237479",
+            country: "India",
           },
         ],
       },
@@ -26,7 +31,7 @@ async function main() {
         create: [
           {
             score: 4,
-            product: {
+            Product: {
               create: {
                 name: "Laptop",
                 image: `https://res.cloudinary.com/db4xfdj2m/image/upload/f_auto,q_auto/v1/techgear/udhc4xzxrrwyo3mqsrol`,
@@ -44,7 +49,7 @@ async function main() {
       addresses: true,
       ratings: {
         include: {
-          product: true,
+          Product: true,
         },
       },
     },

@@ -6,10 +6,15 @@ import prisma from "../lib/prisma/db";
 
 const addAddress = async (req: UserRequest, res: Response) => {
   try {
-    const { address } = req.body;
+    const { user_address } = req.body;
     const addressResponse = await prisma.address.create({
       data: {
-        address,
+        address_line_1: user_address.address_line_1,
+        address_line_2: user_address.address_line_2,
+        street_name: user_address.street_name,
+        city: user_address.city,
+        postal_code: user_address.postal_code,
+        country: user_address.country,
         user_id: req.user!.id,
       },
     });
@@ -64,7 +69,12 @@ const updateAddressById = async (req: UserRequest, res: Response) => {
         id,
       },
       data: {
-        address,
+        address_line_1: address.address_line_1,
+        address_line_2: address.address_line_2,
+        street_name: address.street_name,
+        city: address.city,
+        postal_code: address.postal_code,
+        country: address.country,
       },
     });
     res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.ADDRESS_UPDATED));
