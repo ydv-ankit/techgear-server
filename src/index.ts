@@ -11,12 +11,18 @@ import ratingRoutes from "./routes/rating.route";
 import addressRoutes from "./routes/address.route";
 import authMiddleware from "./middlewares/auth.middleware";
 import orderRoutes from "./routes/order.route";
+import cors from "cors";
 
 const app = express();
 
 // middlewares
 dotenv.config({ path: "../.env" });
-
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN_URL,
+    credentials: true,
+  })
+);
 // logger
 const morganFormat = ":method :url :status :response-time ms";
 
