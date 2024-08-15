@@ -9,7 +9,9 @@ const placeNewOrder = async (req: UserRequest, res: Response) => {
   try {
     const { products, total_price, address_id } = req.body;
     if (!products || !total_price || !address_id) {
-      return res.status(400).json(new ApiResponse(CONSTANTS.MESSAGES.MISSING_FIELDS));
+      return res
+        .status(400)
+        .json(new ApiResponse(CONSTANTS.MESSAGES.MISSING_FIELDS));
     }
     // get user address
     const userAddress = await prisma.address.findUnique({
@@ -66,14 +68,17 @@ const placeNewOrder = async (req: UserRequest, res: Response) => {
       },
     };
 
-    const createOrder = await fetch(`${process.env.PAYPAL_BASE_URL}/v2/checkout/orders`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${paypalAuth?.accessToken}`,
+    const createOrder = await fetch(
+      `${process.env.PAYPAL_BASE_URL}/v2/checkout/orders`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${paypalAuth?.accessToken}`,
+        },
+        body: JSON.stringify(paymentBody),
       },
-      body: JSON.stringify(paymentBody),
-    });
+    );
     const urls = await createOrder.json();
 
     let paymentLink = "";
@@ -94,11 +99,18 @@ const placeNewOrder = async (req: UserRequest, res: Response) => {
     });
 
     // send response
-    res.status(201).json(new ApiResponse(CONSTANTS.MESSAGES.ORDER_PLACED, { link: paymentLink, placeOrder }));
+    res.status(201).json(
+      new ApiResponse(CONSTANTS.MESSAGES.ORDER_PLACED, {
+        link: paymentLink,
+        placeOrder,
+      }),
+    );
   } catch (error) {
     console.log(error);
 
-    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+    res
+      .status(500)
+      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
   }
 };
 
@@ -110,9 +122,13 @@ const getUserOrders = async (req: UserRequest, res: Response) => {
       },
     });
 
-    res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.ORDER_FOUND, orders));
+    res
+      .status(200)
+      .json(new ApiResponse(CONSTANTS.MESSAGES.ORDER_FOUND, orders));
   } catch (error) {
-    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+    res
+      .status(500)
+      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
   }
 };
 
@@ -124,18 +140,26 @@ const getOrderById = async (req: UserRequest, res: Response) => {
         id,
       },
     });
-    res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.ORDER_FOUND, order));
+    res
+      .status(200)
+      .json(new ApiResponse(CONSTANTS.MESSAGES.ORDER_FOUND, order));
   } catch (error) {
-    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+    res
+      .status(500)
+      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
   }
 };
 
 const getAllOrders = async (req: UserRequest, res: Response) => {
   try {
     const orders = await prisma.order.findMany();
-    res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.ORDER_FOUND, orders));
+    res
+      .status(200)
+      .json(new ApiResponse(CONSTANTS.MESSAGES.ORDER_FOUND, orders));
   } catch (error) {
-    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+    res
+      .status(500)
+      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
   }
 };
 
@@ -153,8 +177,16 @@ const updateOrderById = async (req: UserRequest, res: Response) => {
     });
     res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.ORDER_PLACED));
   } catch (error) {
-    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+    res
+      .status(500)
+      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
   }
 };
 
-export { placeNewOrder, getAllOrders, getOrderById, getUserOrders, updateOrderById };
+export {
+  placeNewOrder,
+  getAllOrders,
+  getOrderById,
+  getUserOrders,
+  updateOrderById,
+};

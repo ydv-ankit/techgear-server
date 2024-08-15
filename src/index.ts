@@ -23,7 +23,7 @@ app.use(
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
-  })
+  }),
 );
 // logger
 const morganFormat = ":method :url :status :response-time ms";
@@ -42,7 +42,7 @@ app.use(
         logger.info(JSON.stringify(logObject));
       },
     },
-  })
+  }),
 );
 
 app.use(express.json());

@@ -9,10 +9,14 @@ const createProduct = async (req: Request, res: Response) => {
   const { name, price, discount } = req.body;
 
   if (!name || !price || !discount) {
-    return res.status(400).json(new ApiResponse(CONSTANTS.MESSAGES.MISSING_FIELDS));
+    return res
+      .status(400)
+      .json(new ApiResponse(CONSTANTS.MESSAGES.MISSING_FIELDS));
   }
   if (!filepath) {
-    return res.status(400).json(new ApiResponse(CONSTANTS.MESSAGES.FILE_NOT_FOUND));
+    return res
+      .status(400)
+      .json(new ApiResponse(CONSTANTS.MESSAGES.FILE_NOT_FOUND));
   }
   try {
     const uploadedImage = await uploadImage(filepath);
@@ -27,7 +31,9 @@ const createProduct = async (req: Request, res: Response) => {
     });
     res.status(201).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_CREATED));
   } catch (error) {
-    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+    res
+      .status(500)
+      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
   }
 };
 
@@ -40,20 +46,30 @@ const productDetailsById = async (req: Request, res: Response) => {
       },
     });
     if (!product) {
-      return res.status(404).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_NOT_FOUND));
+      return res
+        .status(404)
+        .json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_NOT_FOUND));
     }
-    res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_FOUND, product));
+    res
+      .status(200)
+      .json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_FOUND, product));
   } catch (error) {
-    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+    res
+      .status(500)
+      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
   }
 };
 
 const getAllProducts = async (req: Request, res: Response) => {
   try {
     const products = await prisma.product.findMany();
-    res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_FOUND, products));
+    res
+      .status(200)
+      .json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_FOUND, products));
   } catch (error) {
-    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+    res
+      .status(500)
+      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
   }
 };
 
@@ -67,7 +83,9 @@ const updateProductById = async (req: Request, res: Response) => {
       },
     });
     if (!product) {
-      return res.status(404).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_NOT_FOUND));
+      return res
+        .status(404)
+        .json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_NOT_FOUND));
     }
     await prisma.product.update({
       where: {
@@ -81,7 +99,9 @@ const updateProductById = async (req: Request, res: Response) => {
     });
     res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_UPDATED));
   } catch (error) {
-    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+    res
+      .status(500)
+      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
   }
 };
 
@@ -94,7 +114,9 @@ const deleteProductById = async (req: Request, res: Response) => {
       },
     });
     if (!product) {
-      return res.status(404).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_NOT_FOUND));
+      return res
+        .status(404)
+        .json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_NOT_FOUND));
     }
     await prisma.product.delete({
       where: {
@@ -103,8 +125,16 @@ const deleteProductById = async (req: Request, res: Response) => {
     });
     res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_DELETED));
   } catch (error) {
-    res.status(500).json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+    res
+      .status(500)
+      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
   }
 };
 
-export { createProduct, productDetailsById, getAllProducts, updateProductById, deleteProductById };
+export {
+  createProduct,
+  productDetailsById,
+  getAllProducts,
+  updateProductById,
+  deleteProductById,
+};
