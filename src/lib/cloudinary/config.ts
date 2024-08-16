@@ -2,8 +2,6 @@ const { v2: cloudinary } = require("cloudinary");
 import fs from "fs";
 
 export const uploadImage = async (imagePath: string) => {
-  console.log("imagePath", imagePath);
-
   cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
