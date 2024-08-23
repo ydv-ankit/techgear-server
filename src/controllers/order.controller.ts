@@ -7,26 +7,13 @@ import { createPaypalAuth } from "../lib/paypal/paypal";
 
 const placeNewOrder = async (req: UserRequest, res: Response) => {
   try {
-    const { products, total_price, address_id } = req.body;
-    if (!products || !total_price || !address_id) {
+    const { products, total_price } = req.body;
+    if (!products || !total_price) {
       return res
         .status(400)
         .json(new ApiResponse(CONSTANTS.MESSAGES.MISSING_FIELDS));
     }
-    // get user address
-    const userAddress = await prisma.address.findUnique({
-      where: {
-        id: address_id,
-      },
-    });
 
-    const userData = await prisma.user.findUnique({
-      where: {
-        id: req.user!.id,
-      },
-    });
-
-    // TODO: generate payment link
     const paypalAuth = await createPaypalAuth();
 
     const paymentBody = {
@@ -48,8 +35,8 @@ const placeNewOrder = async (req: UserRequest, res: Response) => {
             landing_page: "LOGIN",
             shipping_preference: "NO_SHIPPING",
             user_action: "PAY_NOW",
-            return_url: `${process.env.CLIENT_URL}/payment`,
-            cancel_url: `${process.env.CLIENT_URL}/payment`,
+            return_url: `${process.env.CLIENT_URL}/checkout`,
+            cancel_url: `${process.env.CLIENT_URL}/checkout`,
           },
         },
       },
