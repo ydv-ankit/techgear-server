@@ -37,19 +37,6 @@ const placeNewOrder = async (req: UserRequest, res: Response) => {
             currency_code: "USD",
             value: total_price,
           },
-          shipping: {
-            name: {
-              full_name: userData?.name,
-            },
-            address: {
-              address_line_1: userAddress?.address_line_1,
-              address_line_2: userAddress?.address_line_2,
-              admin_area_2: userAddress?.street_name,
-              admin_area_1: userAddress?.city,
-              postal_code: userAddress?.postal_code,
-              country_code: "IN",
-            },
-          },
         },
       ],
       payment_source: {
@@ -59,7 +46,7 @@ const placeNewOrder = async (req: UserRequest, res: Response) => {
             brand_name: "Ankit Tech Store",
             locale: "en-US",
             landing_page: "LOGIN",
-            shipping_preference: "SET_PROVIDED_ADDRESS",
+            shipping_preference: "NO_SHIPPING",
             user_action: "PAY_NOW",
             return_url: `${process.env.CLIENT_URL}/payment`,
             cancel_url: `${process.env.CLIENT_URL}/payment`,
@@ -87,8 +74,9 @@ const placeNewOrder = async (req: UserRequest, res: Response) => {
         paymentLink = link.href;
       }
     });
+    console.log(urls);
 
-    const payment_id = paymentLink?.split("?")[1].split("=")[1];
+    const payment_id = paymentLink?.split("?")[1]?.split("=")[1];
     const placeOrder = await prisma.order.create({
       data: {
         user_id: req.user!.id,
@@ -124,7 +112,7 @@ const getUserOrders = async (req: UserRequest, res: Response) => {
 
     res
       .status(200)
-      .json(new ApiResponse(CONSTANTS.MESSAGES.ORDER_FOUND, orders));
+      .json(new ApiResponse(CONSTANTS.MESSAGES.ORDERS_FOUND, orders));
   } catch (error) {
     res
       .status(500)
@@ -175,7 +163,7 @@ const updateOrderById = async (req: UserRequest, res: Response) => {
         payment_status,
       },
     });
-    res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.ORDER_PLACED));
+    res.status(200).json(new ApiResponse(CONSTANTS.MESSAGES.ORDER_UPDATED));
   } catch (error) {
     res
       .status(500)
