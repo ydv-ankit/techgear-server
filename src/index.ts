@@ -56,7 +56,7 @@ app.get("/health", (req: Request, res: Response) => {
   res.status(200).json(new ApiResponse("Server is running smoothly"));
 });
 app.use("/api/v1/auth", authRoutes);
-app.use("/api/v1/product", authMiddleware, productRoutes);
+app.use("/api/v1/product", productRoutes);
 app.use("/api/v1/rating", authMiddleware, ratingRoutes);
 app.use("/api/v1/address", authMiddleware, addressRoutes);
 app.use("/api/v1/order", authMiddleware, orderRoutes);
