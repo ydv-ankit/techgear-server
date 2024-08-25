@@ -61,7 +61,6 @@ const placeNewOrder = async (req: UserRequest, res: Response) => {
         paymentLink = link.href;
       }
     });
-    console.log(urls);
 
     const payment_id = paymentLink?.split("?")[1]?.split("=")[1];
     const placeOrder = await prisma.order.create({
@@ -144,7 +143,7 @@ const updateOrderById = async (req: UserRequest, res: Response) => {
     const { payment_status } = req.body;
     await prisma.order.update({
       where: {
-        id,
+        payment_id: id,
       },
       data: {
         payment_status,

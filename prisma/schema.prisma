@@ -73,7 +73,7 @@ model Order {
   products       String[]
   payment_status PAYMENT_STATUS @default(PENDING)
   payment_price  Int
-  payment_id     String
+  payment_id     String         @unique
   order_time     DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
   user_id        String
