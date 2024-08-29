@@ -66,6 +66,7 @@ const login = async (req: Request, res: Response) => {
               role: "admin",
               name: "Ankit Ydv",
               email: "ankit@admin.com",
+              avatar: `https://avatar.iran.liara.run/username?username=Ankit`,
             },
           }),
         );
