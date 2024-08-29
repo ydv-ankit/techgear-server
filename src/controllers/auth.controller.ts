@@ -54,16 +54,21 @@ const login = async (req: Request, res: Response) => {
   try {
     // for admins
     if (email === "ankit@admin.com" && password === "Ankit@admin123") {
-      return res.status(200).json(
-        new ApiResponse("Admin found", {
-          user: {
-            id: "1001",
-            role: "admin",
-            name: "Ankit Ydv",
-            email: "ankit@admin.com",
-          },
-        }),
-      );
+      const { refreshToken, accessToken } =
+        generateRefreshAndAccessToken("ankit@admin.com");
+      return res
+        .cookie("refreshToken", refreshToken, cookieOptions)
+        .cookie("accessToken", accessToken, cookieOptions)
+        .json(
+          new ApiResponse("Admin found", {
+            user: {
+              id: "1001",
+              role: "admin",
+              name: "Ankit Ydv",
+              email: "ankit@admin.com",
+            },
+          }),
+        );
     }
     const user = await prisma.user.findUnique({
       where: { email },
