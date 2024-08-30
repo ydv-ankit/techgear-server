@@ -43,6 +43,8 @@ const register = async (req: Request, res: Response) => {
     });
     res.status(201).json(new ApiResponse(CONSTANTS.MESSAGES.USER_CREATED));
   } catch (error) {
+    console.log(error);
+
     res
       .status(500)
       .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
