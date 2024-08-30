@@ -33,7 +33,7 @@ const register = async (req: Request, res: Response) => {
         .json(new ApiResponse(CONSTANTS.MESSAGES.USER_ALREADY_EXISTS));
     }
     const hashedPasswd = await hashPassword(password);
-    await prisma.user.create({
+    const newUser = await prisma.user.create({
       data: {
         name,
         email,
@@ -41,7 +41,16 @@ const register = async (req: Request, res: Response) => {
         avatar: `https://avatar.iran.liara.run/username?username=${name}`,
       },
     });
-    res.status(201).json(new ApiResponse(CONSTANTS.MESSAGES.USER_CREATED));
+    const { refreshToken, accessToken } = generateRefreshAndAccessToken(
+      newUser?.id,
+    );
+    res
+      .cookie("refreshToken", refreshToken, cookieOptions)
+      .cookie("accessToken", accessToken, cookieOptions)
+      .status(201)
+      .json(
+        new ApiResponse(CONSTANTS.MESSAGES.USER_CREATED, { user: newUser }),
+      );
   } catch (error) {
     console.log(error);
 
