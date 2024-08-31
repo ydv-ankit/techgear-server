@@ -18,7 +18,11 @@ const generateRefreshAndAccessToken = (userid: string) => {
 
 const cookieOptions = {
   httpOnly: true,
-  secure: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite:
+    process.env.NODE_ENV === "production"
+      ? ("strict" as "strict")
+      : ("lax" as "lax"),
 };
 
 const register = async (req: Request, res: Response) => {
