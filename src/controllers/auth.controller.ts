@@ -52,11 +52,11 @@ const register = async (req: Request, res: Response) => {
         new ApiResponse(CONSTANTS.MESSAGES.USER_CREATED, { user: newUser }),
       );
   } catch (error) {
-    console.log(error);
-
     res
       .status(500)
-      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+      .json(
+        new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, { error }),
+      );
   }
 };
 
@@ -117,7 +117,9 @@ const login = async (req: Request, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+      .json(
+        new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, { error }),
+      );
   }
 };
 
@@ -159,7 +161,7 @@ const generateNewToken = async (req: Request, res: Response) => {
       .clearCookie("accessToken", cookieOptions)
       .clearCookie("refreshToken", cookieOptions)
       .status(401)
-      .json(new ApiResponse(CONSTANTS.MESSAGES.USER_LOGIN_REQUIRED));
+      .json(new ApiResponse(CONSTANTS.MESSAGES.USER_LOGIN_REQUIRED, { error }));
   }
 };
 

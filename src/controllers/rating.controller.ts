@@ -56,7 +56,9 @@ const addRating = async (
   } catch (error) {
     res
       .status(500)
-      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+      .json(
+        new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, { error }),
+      );
   }
 };
 
@@ -69,7 +71,9 @@ const getAllRatings = async (req: Request, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+      .json(
+        new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, { error }),
+      );
   }
 };
 

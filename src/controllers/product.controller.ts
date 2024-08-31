@@ -33,7 +33,9 @@ const createProduct = async (req: Request, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+      .json(
+        new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, { error }),
+      );
   }
 };
 
@@ -56,7 +58,9 @@ const productDetailsById = async (req: Request, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+      .json(
+        new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, { error }),
+      );
   }
 };
 
@@ -67,9 +71,12 @@ const getAllProducts = async (req: Request, res: Response) => {
       .status(200)
       .json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_FOUND, products));
   } catch (error) {
+    console.log(error);
     res
       .status(500)
-      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+      .json(
+        new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, { error }),
+      );
   }
 };
 
@@ -101,7 +108,9 @@ const updateProductById = async (req: Request, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+      .json(
+        new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, { error }),
+      );
   }
 };
 
@@ -127,7 +136,9 @@ const deleteProductById = async (req: Request, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+      .json(
+        new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, { error }),
+      );
   }
 };
 

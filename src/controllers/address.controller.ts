@@ -24,7 +24,9 @@ const addAddress = async (req: UserRequest, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+      .json(
+        new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, { error }),
+      );
   }
 };
 
@@ -41,7 +43,9 @@ const getUserAddresses = async (req: UserRequest, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+      .json(
+        new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, { error }),
+      );
   }
 };
 
@@ -61,7 +65,9 @@ const getAddressById = async (req: UserRequest, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+      .json(
+        new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, { error }),
+      );
   }
 };
 
@@ -74,7 +80,9 @@ const getAllAddresses = async (req: UserRequest, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+      .json(
+        new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, { error }),
+      );
   }
 };
 
@@ -99,7 +107,9 @@ const updateAddressById = async (req: UserRequest, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+      .json(
+        new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, { error }),
+      );
   }
 };
 
@@ -115,7 +125,9 @@ const deleteAddressById = async (req: UserRequest, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+      .json(
+        new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, { error }),
+      );
   }
 };
 

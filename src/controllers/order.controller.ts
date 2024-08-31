@@ -84,7 +84,9 @@ const placeNewOrder = async (req: UserRequest, res: Response) => {
 
     res
       .status(500)
-      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+      .json(
+        new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, { error }),
+      );
   }
 };
 
@@ -102,7 +104,9 @@ const getUserOrders = async (req: UserRequest, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+      .json(
+        new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, { error }),
+      );
   }
 };
 
@@ -120,7 +124,9 @@ const getOrderById = async (req: UserRequest, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+      .json(
+        new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, { error }),
+      );
   }
 };
 
@@ -133,7 +139,9 @@ const getAllOrders = async (req: UserRequest, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+      .json(
+        new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, { error }),
+      );
   }
 };
 
@@ -153,7 +161,9 @@ const updateOrderById = async (req: UserRequest, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json(new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR));
+      .json(
+        new ApiResponse(CONSTANTS.MESSAGES.INTERNAL_SERVER_ERROR, { error }),
+      );
   }
 };
 
