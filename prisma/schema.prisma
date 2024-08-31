@@ -20,7 +20,6 @@ model User {
   avatar       String
   accessToken  String?
   refreshToken String?
-  cartitems    Int        @default(0)
   addresses    Address[]
   ratings      Rating[]
   ItemCart     ItemCart[]
