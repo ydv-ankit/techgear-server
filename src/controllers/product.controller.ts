@@ -27,6 +27,7 @@ const createProduct = async (req: Request, res: Response) => {
         image: uploadedImage.data.secure_url,
         discount: parseInt(discount),
         no_of_sales: 0,
+        rating: Math.floor(Math.random() * 4 + 1),
       },
     });
     res.status(201).json(new ApiResponse(CONSTANTS.MESSAGES.PRODUCT_CREATED));
