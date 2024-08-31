@@ -99,6 +99,7 @@ const login = async (req: Request, res: Response) => {
       const { refreshToken, accessToken } = generateRefreshAndAccessToken(
         user?.id,
       );
+      console.log("cookieOptions:", cookieOptions);
       res
         .cookie("refreshToken", refreshToken, cookieOptions)
         .cookie("accessToken", accessToken, cookieOptions)
