@@ -21,7 +21,7 @@ const cookieOptions = {
   secure: process.env.NODE_ENV === "production",
   sameSite:
     process.env.NODE_ENV === "production"
-      ? ("strict" as "strict")
+      ? ("none" as "none")
       : ("lax" as "lax"),
 };
 
